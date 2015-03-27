@@ -20,7 +20,7 @@ class WebServer
           socket.print HEADER
           handler.call(socket, request)
           socket.close
-        rescue Errno::EPIPE
+        rescue Errno::EPIPE, IOError
           retry
         end
       end
