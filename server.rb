@@ -14,15 +14,15 @@ class WebServer
     server = TCPServer.new port
 
     loop do
-      Thread.start(server.accept) do |socket|
-        begin
+      begin
+        Thread.start(server.accept) do |socket|
           request = receive_request!(socket)
           socket.print HEADER
           handler.call(socket, request)
           socket.close
-        rescue Errno::EPIPE, IOError
-          retry
         end
+      rescue Errno::EPIPE, IOError
+        retry
       end
     end
   end
