@@ -2,7 +2,6 @@
 
 require "socket"
  
-HEADER = "HTTP/1.1 200 OK\r\nContent-type: text/plain\r\n\r\n"
 port = ENV["PORT"] or raise "Must set PORT environment variable"
 server = TCPServer.new port
 
@@ -15,7 +14,7 @@ loop do
         request << line.chomp
       end
 
-      socket.print HEADER
+      socket.print "HTTP/1.1 200 OK\r\nContent-type: text/plain\r\n\r\n"
 
       socket.puts "Hello world! #{Time.now}"
       socket.puts
